@@ -25,9 +25,9 @@ playerY_change = 0
 #ufo-jutki
 enemyImg = pygame.image.load('enemy.png')
 enemyX = random.randint(0,736)       #to jest pozycja startowa ufoludkow
-enemyY = random.randint(50,150)       #to tez
+enemyY = random.randint(50,100)       #to tez
 enemyX_change = 0.3
-enemyY_change = 30
+enemyY_change = 0.01
 
 
 def player(x,y):
@@ -81,17 +81,18 @@ while running:
     enemyX += enemyX_change
     enemyY += enemyY_change
 
-    if enemyX <=0:
+    if enemyX <= 0:
         enemyX_change = 0.3
         enemyY += enemyY_change
     elif enemyX >= 736:
         enemyX_change = -0.3
         enemyY += enemyY_change
 
-    if enemyY <=0:
+    if enemyY <= 0:
         enemyY = 0
-    if enemyY >=536:
+    if enemyY >= 536:
         enemyY = 536
+
     player(playerX, playerY)  #po screenfill bo najpierw musi byc narysowany ekran i jego wypelnieni i dopiero na nim player
     enemy(enemyX, enemyY)
     pygame.display.update()   #to pilnuje zeby updateowal to co dorzucimy do wyswietlania
