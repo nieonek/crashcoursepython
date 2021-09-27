@@ -31,12 +31,24 @@ enemyY = random.randint(50,100)       #to tez
 enemyX_change = 0.3
 enemyY_change = 0.01
 
+#pew pew!
+bulletImg = pygame.image.load('bullet.png')
+bulletX = 0
+bulletY = 480    #JAK TO ZROBIC zeby startowal z aktualnej pozycji statku? bo moj moze ruszac sie tez gora/dol
+bulletX_change = 0
+bulletY_change = 4
+bullet_state = "ready" #w ready pocisk jest schowany pod statkiem
 
 def player(x,y):
     screen.blit(playerImg, (x, y) )      #blit draw-uje na ekranie (ikona, (osX, osY)
 
 def enemy(x,y):
     screen.blit(enemyImg, (x, y) )
+
+def fire_bullet(x,y):
+    global bullet_state
+    bullet_state = "fire"
+    screen.blit(bulletImg, (x+16,y+10))  # +16 i +10 zeby wylatywal ze srodka statku
 
 #loop gry (primo zeby sie nie zawieszalo, duo by okno sie nie zamykalo chyba ze po quitcie
 running = True
@@ -58,6 +70,11 @@ while running:
                 playerY_change = -0.3
             if event.key == pygame.K_DOWN:
                 playerY_change = 0.3
+            if event.key == pygame.K_SPACE:
+                if bullet_state is "ready":
+                    bulletX = playerX
+                    fire_bullet(bulletX, bulletY)
+
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                 playerX_change = 0
@@ -78,6 +95,14 @@ while running:
         playerY = 0
     if playerY >=536:
         playerY = 536
+
+#bullet movement
+    if bulletY <=0:
+        bulletY = 480
+        bullet_state = "ready"
+    if bullet_state is "fire":
+        fire_bullet(bulletX, bulletY)
+        bulletY -= bulletY_change
 
 # boundaries ufojutkow
 
