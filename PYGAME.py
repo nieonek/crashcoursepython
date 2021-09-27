@@ -27,7 +27,7 @@ enemyImg = pygame.image.load('enemy.png')
 enemyX = random.randint(0,736)       #to jest pozycja startowa ufoludkow
 enemyY = random.randint(50,150)       #to tez
 enemyX_change = 0.3
-enemyY_change = 0
+enemyY_change = 30
 
 
 def player(x,y):
