@@ -73,6 +73,7 @@ while running:
             if event.key == pygame.K_SPACE:
                 if bullet_state is "ready":
                     bulletX = playerX
+                    bulletY = playerY
                     fire_bullet(bulletX, bulletY)
 
         if event.type == pygame.KEYUP:
