@@ -8,7 +8,9 @@ pygame.init()
 #dodanie ekranu/wyswietlacza
 screen=pygame.display.set_mode((800, 600))  #szerokosc , wysokosc  - 0, 0 to byloby "nic" w lewym gornym rogu
 
-running = True
+#Tło
+background = pygame.image.load("kosmos.png")
+
 
 #Tytul i Icona okna ekranu
 pygame.display.set_caption("Space Invaders")  # nazwa okna ekranu
@@ -37,10 +39,11 @@ def enemy(x,y):
     screen.blit(enemyImg, (x, y) )
 
 #loop gry (primo zeby sie nie zawieszalo, duo by okno sie nie zamykalo chyba ze po quitcie
+running = True
 while running:
 
-    screen.fill((120, 0, 115))  # kolor wypelnienia ekranu w RGB
-
+    screen.fill((0, 0, 0))  # kolor wypelnienia ekranu w RGB
+    screen.blit(background, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
