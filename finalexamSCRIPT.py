@@ -46,9 +46,9 @@ def current_users(events):
     for event in events:
         if event.machine not in machines:
             machines[event.machine] = set()
-        if event.type = "login":
+        if event.type == "login":
             machines[event.machine].add(event.user)
-        elif event.type = "logout"
+        elif event.type == "logout":
             machines[event.machine].remove(event.user)
     return machines
 
@@ -57,3 +57,22 @@ def generate_report(machines):
         if len(users) > 0:
             user_list = ", ".join(users)
             print(F"{machine}: {user_list}")
+
+class Event:
+    def __init__(self,event_date, event_type, machine_name, user):
+        self.date = event_date
+        self.type = event_type
+        self.machine = machine_name
+        self.user = user
+
+events = [
+    Event('2020-01-21 12:45:56', 'login', 'myworkstation.local', 'Janek'),
+    Event('2020-01-22 12:26:12', 'login', 'webserver.local', 'Zenek'),
+    Event('2020-01-22 16:34:12', 'logout', 'webserver.local', 'Zenek'),
+    Event('2020-01-21 14:02:07', 'login', 'mailserver.local', 'Benek'),
+]
+
+users = current_users(events)
+print(users)
+
+generate_report(users)
