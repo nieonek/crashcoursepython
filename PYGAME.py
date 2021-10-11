@@ -25,19 +25,24 @@ playerX_change = 0
 playerY_change = 0
 
 # ufo-
-enemyImg = []                  # <-- to jest lista panie kolego
-enemyX = []
-enemyY = []
-enemyX_change = []
-enemyY_change = []
-number_of_enemies = 6
+# enemyImg = []  # <-- to jest lista panie kolego
+# enemyX = []
+# enemyY = []
+# enemyX_change = []
+# enemyY_change = []
+# number_of_enemies = 6
 
-for i in range(number_of_enemies):
-    enemyImg.append(pygame.image.load('enemy.png'))
-    enemyX.append(random.randint(0, 736))  # to jest pozycja startowa ufoludkow
-    enemyY.append(random.randint(50, 100))  # to tez
-    enemyX_change.append(0.3)
-    enemyY_change.append(0.01)
+# for i in range(number_of_enemies):
+enemyImg = pygame.image.load('enemy.png')
+enemyX = random.randint(0, 736)  # to jest pozycja startowa ufoludkow
+enemyY = random.randint(50, 100)  # to tez
+enemyX_change = 0.3
+enemyY_change = 0.01
+# enemyImg.append(pygame.image.load('enemy.png'))
+#  enemyX.append(random.randint(0, 736))  # to jest pozycja startowa ufoludkow
+# enemyY.append(random.randint(50, 100))  # to tez
+# enemyX_change.append(0.3)
+#  enemyY_change.append(0.01)
 
 # pew pew!
 bulletImg = pygame.image.load('bullet.png')
@@ -48,13 +53,15 @@ bulletX_change = 0
 bulletY_change = 4
 bullet_state = "ready"  # w ready pocisk jest schowany pod statkiem
 
-score=0
+score = 0
+
 
 def player(x, y):
     screen.blit(playerImg, (x, y))  # blit draw-uje na ekranie (ikona, (osX, osY)
 
 
-def enemy(x, y, i):
+def enemy(x, y):
+    # def enemy(x, y, i):
     screen.blit(enemyImg, (x, y))
 
 
@@ -66,7 +73,7 @@ def fire_bullet(x, y):
 
 def hits(enemyX, enemyY, bulletX, bulletY):
     distance = math.sqrt((math.pow(enemyX - bulletX, 2)) + (math.pow(enemyY - bulletY, 2)))
-    if distance < 27:        #27 to nazwijmy minimalna odleglosc od hitboxa
+    if distance < 27:  # 27 to nazwijmy minimalna odleglosc od hitboxa
         return True
     else:
         return False
@@ -127,52 +134,51 @@ while running:
         fire_bullet(bulletX, bulletY)
         bulletY -= bulletY_change
 
-
-
-
     # boundaries ufojutkow
 
     enemyX += enemyX_change
     enemyY += enemyY_change
 
+    # ruch ufojutkow
 
-   #ruch ufojutkow
+    if enemyX <= 0:
+        enemyX_change = 0.3
+        enemyY += enemyY_change
+    elif enemyX >= 736:
+        enemyX_change = -0.3
+        enemyY += enemyY_change
+        # for i in range(number_of_enemies):     #nie rozumiem tego [i] ale pewnie dlatego ze nie zrobilem list jeszcze
+        #     enemyX[i] += enemyX_change[i]
+        #     if enemyX[i] <= 0:
+        #         enemyX_change[i] = 0.3
+        #         enemyY[i] += enemyY_change[i]
+        #     elif enemyX[i] >= 736:
+        #         enemyX_change[i] = -0.3
+        #         enemyY[i] += enemyY_change[i]
 
-   # if enemyX <= 0:                dla jednego przeciwnika STARE
-    #     enemyX_change = 0.3
-    #     enemyY += enemyY_change
-   # elif enemyX >= 736:
-   #      enemyX_change = -0.3
-    #     enemyY += enemyY_change
-    for i in range(number_of_enemies):     #nie rozumiem tego [i] ale pewnie dlatego ze nie zrobilem list jeszcze
-        enemyX[i] += enemyX_change[i]
-        if enemyX[i] <= 0:
-            enemyX_change[i] = 0.3
-            enemyY[i] += enemyY_change[i]
-        elif enemyX[i] >= 736:
-            enemyX_change[i] = -0.3
-            enemyY[i] += enemyY_change[i]
-
-            #teraz trafienie musi byc wewnatrz tego loopa (wczensiej bylo oddzielnie)
+        # teraz trafienie musi byc wewnatrz tego loopa (wczensiej bylo oddzielnie)
 
         # trafienie
-        hit = hits(enemyX[i], enemyY[i], bulletX, bulletY)
-        if hit:
-            bulletY = 480
-            bullet_state = "ready"
-            score += 1
-            print(score)
-            enemyX[i] = random.randint(0, 736)
-            enemyY[i] = random.randint(50, 100)
+    hit = hits(enemyX, enemyY, bulletX, bulletY)
+    #  hit = hits(enemyX[i], enemyY[i], bulletX, bulletY)
+    if hit:
+        bulletY = 480
+        bullet_state = "ready"
+        score += 1
+        print(score)
+        enemyX = random.randint(0, 736)
+        enemyY = random.randint(50, 100)
+    #    enemyX[i] = random.randint(0, 736)
+    #    enemyY[i] = random.randint(50, 100)
+    # enemy(enemyX[i], enemyY[i], i)
+    enemy(enemyX, enemyY)
 
-        enemy(enemyX[i], enemyY[i], i)
+if enemyY <= 0:
+    enemyY = 0
+if enemyY >= 536:
+    enemyY = 536
 
-    if enemyY <= 0:
-        enemyY = 0
-    if enemyY >= 536:
-        enemyY = 536
-
-    player(playerX,
-           playerY)  # po screenfill bo najpierw musi byc narysowany ekran i jego wypelnieni i dopiero na nim player
-
-    pygame.display.update()  # to pilnuje zeby updateowal to co dorzucimy do wyswietlania
+player(playerX,
+       playerY)  # po screenfill bo najpierw musi byc narysowany ekran i jego wypelnieni i dopiero na nim player
+enemy(enemyX, enemyY)
+pygame.display.update()  # to pilnuje zeby updateowal to co dorzucimy do wyswietlania
