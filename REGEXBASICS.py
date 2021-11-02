@@ -146,3 +146,29 @@ def rearrange_name(name):
   return "{} {}".format(result[2], result[1])
 
 print(rearrange_name("Gawrys, Pawel F."))
+
+
+pattern = r"\[(\d+)\]"  # wymatchuje ciagi cyfr wewnatrz [ ] czyli np errory
+log = "26.04.2017, error taki i taki wystapip blablabalbala [54321]  a potem jeszcze dupnal [1567892]"
+result = re.search(pattern, log)
+print(result[1])
+
+# CO sie stanie jesliw  nawiasie [ ] nie bedzie cyfr?
+# log = "aaaabudhfws [blabla] idshgfiwdu"
+# result = re.search(pattern, log)
+# print(result[1])
+#
+# ==> Traceback (most recent call last):
+#   File "C:\Users\nieon\PycharmProjects\PythonCrashcopursebrudnopis\REGEXBASICS.py", line 159, in <module>
+#     print(result[1])
+# TypeError: 'NoneType' object is not subscriptable
+# ZEBY TEGO UNIKNAC robi sie funkcje
+
+def extract_pid(log_line):
+  regex = r"\[(\d+)\]"
+  result = re.search(regex, log_line)
+  if result == None:
+    return ""
+  return result[1]
+
+print(extract_pid(log))
