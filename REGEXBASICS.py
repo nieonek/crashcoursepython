@@ -48,6 +48,11 @@ print(re.search(r"p?each", "to each his own")) # w tym wypadku p ma byc 0 lub 1 
 print(re.search(r"\w*", "jakies tam zdanie"))
 print(re.search(r"\w*", "jakies_tam_zdanie"))
 
+pattern = r"^[aA-zZ_][aA-zZ0-9_]*$"  # na pocz ma byc litera duza/mala lub podkreslnik
+                                  # potem litera cyfra lub podkreslnik a potem cokolwiek
+print(re.search(pattern, "_this_is_a_valid_variable_name"))
+print(re.search(pattern, "this isnt a valid variable name")) # spacja nie jest w dop znakach
+
 def check_punctuation (text):
   result = re.search(r"^[A-Z].*[.!?]$", text)
   return result != None
@@ -97,7 +102,7 @@ print(repeating_letter_a("A is for apple")) # True
 
 #CHARACTER CLASS:
  # przyklady:
- #  [listaznakow] np [.!?]$ - string ma sie konczyc jednymz  tych 3 znakow
+ #  [listaznakow] np [.!?]$ - string ma sie konczyc jednym z tych 3 znakow
  #  [aA]ronia - duze a lub małe
  #  [A-Z]olo - zaczyna sie na dowolna litere od a do z
  #     jedno z drugim to np [aA-zZ]
