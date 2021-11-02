@@ -108,3 +108,41 @@ print(repeating_letter_a("A is for apple")) # True
  #     jedno z drugim to np [aA-zZ]
  #  mozna łączyc dowolna ilość np re.search(r"cloud[A-Za-z0-9]", "cloud76")
  #  [^aA-zZ] - ma szukac czegos co nie jest tym co w nawiasie
+ #   repetition qualifier {} np r"[aA-zZ0-9]{6}" wymatchuje 6znakow+
+ #                          {6,12} zakres znakow od 6 do 12
+ #                         jeszcze np {,15} i np {4,}
+ #   \b  - word limits zeby wymnatchowac dokladnie 6znakowe
+ #                            r"\b[aA-zZ0-9]{6}\b"
+ # CAPTURING GROUPS:
+
+
+result = re.search(r"^(\w*), (\w*)$", "Lovelace, Ada")
+print(result)
+print(result.groups())
+
+# w indexie 0 daje caly string
+print(result[0])
+
+# w indexie 1 da pierwszy match w 2 drugi itp itd
+print(result[1])
+print(result[2])
+print("{} {}".format(result[2], result[1]))
+
+
+def rearrange_name(name):
+  result = re.search(r"^(\w*), (\w*)$", name)
+  if result is None:
+      return name
+  return "{} {}".format(result[2], result[1])
+
+print(rearrange_name("Bond, James"))
+print(rearrange_name("Gawrys, Pawel"))
+
+# A tak zeby uwzglednic middle name
+def rearrange_name(name):
+  result = re.search(r"^([\w]*), ([\w* \.]*)$", name)
+  if result is None:
+      return name
+  return "{} {}".format(result[2], result[1])
+
+print(rearrange_name("Gawrys, Pawel F."))
