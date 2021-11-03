@@ -92,7 +92,7 @@ print(extract_pid("July 31 08:08:08 mycomputer new_process[67890]: RUNNING Perfo
 
 import re
 def transform_record(record):
-  new_record = re.sub(r"([\d-]*)",r",+1-\1" ,record)
+  new_record = re.sub(r",([\d-]+)",r",+1-\1" ,record)
   return new_record
 
 print(transform_record("Sabrina Green,802-867-5309,System Administrator"))
