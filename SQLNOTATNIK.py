@@ -191,6 +191,14 @@ MIN() / MAX()  # IGNORUJA NULLe
 SELECT MAX(UnitPrice) AS max_prod_price, MIN(UnitPrice) AS min_prod_price
 FROM Products
 
+przyklad z zadan:
+SELECT
+MIN(Biweekly_High_Rate)
+From salary_range_by_job_classification
+GROUP BY Biweekly_High_Rate
+HAVING Biweekly_High_Rate > "$0.00"
+ORDER BY min(Biweekly_High_Rate) ASC;
+
 SUM()
 
 SELECT SUM(UnitPrice) AS total_prod_price
@@ -215,3 +223,16 @@ ProductID\
 ,UnitPrice
 ,UnitsOnOrder*UnitPrice AS Total_Order_Cost
 FROM Products
+
+
+
+
+JOINS AND SUBQUERIES
+
+Chcemy znac region z ktorego jest kazdy customer ktory mial ladunek wiekszy niz 100
+
+SELECT CustomerID, CompanyName, Region
+FROM Customers
+WHERE CustomerId in (SELECT CustomerID
+    FROM Orders
+    WHERE Freight > 100);
