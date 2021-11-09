@@ -1,3 +1,5 @@
+import SQLNOTATNIK
+
 SQLLITE
 
 SELECT prod_name, prod_id, prod_price
@@ -236,3 +238,108 @@ FROM Customers
 WHERE CustomerId in (SELECT CustomerID
     FROM Orders
     WHERE Freight > 100);
+
+
+
+SELECT COUNT (*) AS orders
+FROM Orders
+WHERE customer_id = "143569";
+
+
+SELECT customer_name
+    ,customer_state
+    (SELECT COUNT (*) AS orders)
+    FROM Orders
+    WHERE Orders.customer_id =
+Customer.customer_id) AS orders
+    FROM customers
+    ORDER BY Customer_name
+
+
+CARTESIAN (CROSS) JOIN EXAMPLE
+
+SELECT product_name
+,unit_price
+,company_name
+FROM suppliers CROSS JOIN products;
+
+INNER JOIN
+
+SELECT suppliers.CompanyName
+,ProductName
+,UnitPrice
+FROM Suppliers INNER JOIN Products
+ON Suppliers.supplierid = \
+Products.supplierid
+
+INNY RODZAJ ZAPISU
+FROM Orders o   przypisujemy o do order --> o.OrderID
+
+PRZYKLAD
+PODWOJNY INNER JOIN
+
+SELECT o.OrderID, c.CompanyName, e.LastName
+FROM ((Orders o INNER JOIN Customers c ON o.CustomerID = c.CustomerID)
+                INNER JOIN Employees e ON o.EmployeeID = e.EmployeeID);
+
+CREATING ALIASES FOR COLUMNS
+
+SELECT column_name
+FROM table_name AS alias_name
+
+przyklad
+SELECT vendor_name
+,product_name
+,product_price
+FROM Vendors AS v, Products AS productnameWHERE v.vendor_id= p.vendor_id;
+
+SELF JOINS
+
+SELECT A.CustomerName AS CustomerName1, B.CustomerName AS CustomerName2, A.City
+FROM Customers A, Customers B   # to samo tylko 2 razy jako A i B
+WHERE A.CustomerID = B.CustomerID
+AND A.City = B.City
+ORDER BY A.City;
+
+LEFT RIGHT AND FULL OUTER JOINS
+
+SQLITE TYLKO LEFT JOIN
+
+SELECT C.CustomerName, O.OrderID
+FROM Customers City
+LEFT JOIN Orders O ON C.CustomerID = SQLNOTATNIK.customer_id
+ORDER BY C.CustomerName;
+
+RIGHT JOIN na odwrot
+
+FULL OUTER JOIN
+
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+FULL OUTER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+
+UNIONS
+
+Kazdy select musi miec tyle samo COLUMN i TEN SAM TYP DANYCH
+W TEJ SAMEJ KOLEJNOSCI
+
+SELECT column_name(s) FROM
+table1
+
+UNION
+
+SELECT column_name(s) FROM
+table2;
+
+
+SELECT City, Country FROM Customers
+WHERE Country="Germany"
+
+UNION
+
+SELECT City, Country FROM Suppliers
+
+WHERE Country="Germany"
+ORDER BY City;
