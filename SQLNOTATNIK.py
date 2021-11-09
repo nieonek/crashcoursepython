@@ -291,7 +291,7 @@ przyklad
 SELECT vendor_name
 ,product_name
 ,product_price
-FROM Vendors AS v, Products AS productnameWHERE v.vendor_id= p.vendor_id;
+FROM Vendors AS v, Products AS productname WHERE v.vendor_id= p.vendor_id;
 
 SELF JOINS
 
