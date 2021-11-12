@@ -15,23 +15,23 @@ elif x == False:
 
 
 # #  KROK 1wszy SZUKAMY LINIJEK LOGOW GDZIE JAKIS USER odpalal CRONy
-# import sys
-#
-# logfile = sys.argv[1]  # 1wsza linijka
-# with open(logfile) as f:
-#     for line in f:
-#         if "CRON" not in line:
-#             continue
-#         print(line.strip())
-
 #  KROK 2gi REGEX ZEBY WYLUSKAC USERNAMEy od CRONow
 
+import sys
 import re
-
-pattern = r"USER \((\w+)\)$"
-line = "JUL 6 14:04:45 computer.name CRON[29940]: USER (zly_admin)"
-result = re.search(pattern,line)
-print(result)
+logfile = sys.argv[1]  # 1wsza linijka
+with open(logfile) as f:
+    for line in f:
+        if "CRON" not in line:
+            continue
+        print(line.strip())
+        pattern = r"USER \((\w+)\)$"
+        result = re.search(pattern,line)
+        if result is None:
+            continue
+        name = result[1]
+        usernames[name] = usernames.get(name, 0) +1
+        print(result[1])
 
 
 
