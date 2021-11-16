@@ -343,3 +343,105 @@ SELECT City, Country FROM Suppliers
 
 WHERE Country="Germany"
 ORDER BY City;
+
+
+
+Find the total number of invoices for each customer along with the customer's full name, city and email.
+
+SELECT FirstName, LastName, City, Email, COUNT(Invoices.CustomerID)
+FROM Customers INNER JOIN Invoices ON Customers.CustomerID = Invoices.CustomerID
+GROUP BY Customers.CustomerID
+
+
+- Retrieve the track name, album, artist, and trackID for
+-- all the albums.
+
+SELECT Tracks.Name,
+       A.Name AS Artist,
+       Albums.Title AS Album,
+       Tracks.TrackId
+FROM ((Tracks INNER JOIN Albums
+ON Tracks.AlbumId = Albums.AlbumId)
+INNER JOIN Artists A
+ON A.ArtistId = Albums.ArtistId);
+
+
+
+Find the name and ID of the artists who do not have albums.
+
+SELECT Artists.Name, Artists.ArtistID, Albums.Title
+FROM Artists LEFT JOIN Albums ON Artists.ArtistID = Albums.ArtistID
+WHERE AlbumID IS NULL
+
+
+Use a UNION to create a list of all the employee's and customer's first names and last names ordered by the last name
+in descending order.
+
+SELECT FirstName, LastName
+FROM Employees
+
+UNION
+
+SELECT FirstName, LastName
+FROM Customers
+ORDER BY LastName DESC
+
+
+*******************
+CONCATENATE STRINGS
+
+SELECT CompanyName, ContactName, CompanyName || "("||ContactName||")"
+FROM CUSTOMERS
+    =======>
+Around the Horn     Thomas Hardy       Around the Horn (Thomas Hardy)
+
+*****************
+TRIMMING STRINGS
+
+TRIM
+LTRIM
+RTRIM
+
+SELECT TRIM( "  You the best.   ") AS TrimmedString;     ---> Pozbywamy sie spacji
+
+
+**************
+SUBSTRING
+
+SUBSTR(string name, string position, number of characters to be returned);
+
+NA PRZYKLAD
+
+SELECT first_name, SUBSTR (first_name,2,3   -----> np alexander ---> lex
+                     pierwsza liczba to start, druga to ile liter od startu
+            W przypadku ALEXANDER zaczynamy od 2 L i bierzemy 3 litery L E X
+                PIERWSZE 3 LITERY to bedzie 1,3
+FROM Employees
+WHERE departmentid = 60;
+
+*****************
+UPPER AND LOWER
+
+SELECT UPPER(column_name) FROM  table_name;
+
+SELECT LOWER(column_name) FROM  table_name;
+
+SELECT UCASE(column_name) FROM  table_name;
+
+
+************************************
+WORKING WITH DATES
+
+DATE FORMATS
+
+DATE
+YYYY-MM-DD
+
+DATETIME
+YYYY-MM-DD HH:MM:SS
+
+TIMESTAMP
+YYYY-MM-DD HH:MM:SS
+
+
+
