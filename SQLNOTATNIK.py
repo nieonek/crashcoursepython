@@ -443,5 +443,79 @@ YYYY-MM-DD HH:MM:SS
 TIMESTAMP
 YYYY-MM-DD HH:MM:SS
 
+STRFTIME function, also known as the string format time function, compute the current date and
+use it to compare to the recorded date in your data.
+
+    *SELECT Birthdate
+     ,STRFTIME("%Y", Birthdate) AS Year
+     ,STRFTIME("%M", Birthdate) AS Month
+     ,STRFTIME("%D", Birthdate) AS DAY
+     FROM EMPLOYEES
+
+    *SELECT STRFTIME("%Y %d %d", "now")
+
+    *SELECT Birthdate\
+     ,STRFTIME("%Y", Birthdate) AS YEAR
+     ,STRFTIME("%m", Birthdate) AS MONTH
+     ,STRFTIME("%d", Birthdate) AS DAY
+     ,DATE(("now")-Birthdate) AS AGE
+     FROM Employees
+
+NOW function, and combine several date and time functions together to manipulate data in specific ways.
+
+    *SELECT DATE("now")
 
 
+****************************
+CASE STATEMENTS    --   cos ala IF THEN ELSE
+
+*WZOR:
+
+CASE
+WHEN C1 THEN E1
+WHEN C2 THEN E2
+...
+ELSE [result else]
+END
+
+
+CASE input_expression
+WHEN when_expression THEN result_expression [.... n]
+[ ELSE else_result_expression]
+END
+
+*PRZYKLAD:
+
+SELECT
+employeeID
+,FirstName
+,LastName
+,City
+,CASE City
+    WHEN "Calgary" THEN "Calgary"
+ELSE "Other"
+    END Calgary
+FROM Employees
+ORDER BY LastName, FirstName;
+
+
+*CASE DO SEARCHowania
+
+CASE WHEN Boolean_expression
+THEN result_expression [.... n]
+[ ELSE else_result_expression ]
+END
+
+*PRZYKLAD SEARCHA
+
+SELECT
+trackID
+,name
+,bytes
+,CASE
+WHEN bytes < 300000 THEN "SMALL"
+WHEN bytes >= 300001 AND bytes < 500000 THEN "MEDIUM"
+WHEN bytes >= 500001 THEN "LARGE"
+ELSE "OTHER"
+END bytescategory
+FROM Tracks;
