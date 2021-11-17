@@ -386,6 +386,17 @@ SELECT FirstName, LastName
 FROM Customers
 ORDER BY LastName DESC
 
+Create a new customer invoice id by combining a customer’s invoice id with their first and last name while
+ordering your query in the following order: firstname, lastname, and invoiceID.
+
+
+SELECT c.FirstName,
+c.LastName,
+c.FirstName || c.LastName || i.InvoiceId AS NewID
+FROM Customers c INNER JOIN Invoices i ON c.CustomerID = i.CustomerID
+WHERE NewID LIKE "AstridGruber%"
+
+
 
 *******************
 CONCATENATE STRINGS
