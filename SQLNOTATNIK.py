@@ -519,3 +519,39 @@ WHEN bytes >= 500001 THEN "LARGE"
 ELSE "OTHER"
 END bytescategory
 FROM Tracks;
+
+
+****************
+VIEWS
+
+*WZOR
+CREATE [TEMP] VIEW [IF NOT EXISTS]view_name(column-name-list) AS select-statement;
+
+*PRZYKLAD
+Chce zobaczyc ile territories ma kazdy z employee
+
+CREATE VIEW my_view AS SELECT
+r.regiondescription
+,t.territorydescription
+,e.LastName
+,e.FirstName
+,e.HireDate
+,e.ReportsTo
+FROM Region r
+INNER JOIN Territories t ON  r.regionID=t.regionID
+INNER JOIN EmployeeTerritories et ON t.TerritoryID = et.TerritoryID
+INNER JOIN Employees e ON et.EmployeeID = e.EmployeeID
+
+ZEBY WYSWIETLIC--->
+
+SELECT *
+FROM my_view
+DROP VIEW my_view;
+
+TERAZ ZEBY POLICZYC TERYTORIA--->
+
+SELECT COUNT (Territorydescription)
+,LastName
+,FirstName
+FROM my_view
+GROUP BY LastName, First Name
